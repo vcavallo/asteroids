@@ -2,12 +2,12 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
   //for pos/vel
   //[x,y]
-  var MovingObject = Asteroids.MovingObject = function(pos, vel, rad, color, dim){
+  var MovingObject = Asteroids.MovingObject = function(pos, vel, rad, color, game_dims){
     this.pos = pos;
     this.vel = vel;
     this.rad = rad;
     this.color = color;
-    this.dim = dim;
+    this.game_dims = game_dims;
   }
 
   MovingObject.prototype.move = function() {
@@ -19,11 +19,11 @@
 
 
   MovingObject.prototype.wrapMove = function(){
-    this.pos[0] = (this.pos[0] + this.vel[0]) % this.dim[0];
-    this.pos[1] = (this.pos[1] + this.vel[1]) % this.dim[1];
+    this.pos[0] = (this.pos[0] + this.vel[0]) % this.game_dims[0];
+    this.pos[1] = (this.pos[1] + this.vel[1]) % this.game_dims[1];
 
-    if(this.pos[0] < 0) { this.pos[0] = this.dim[0]; }
-    if(this.pos[1] < 0) { this.pos[1] = this.dim[1]; }
+    if(this.pos[0] < 0) { this.pos[0] = this.game_dims[0]; }
+    if(this.pos[1] < 0) { this.pos[1] = this.game_dims[1]; }
   }
 
   MovingObject.prototype.draw = function(ctx) {

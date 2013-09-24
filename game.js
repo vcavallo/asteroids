@@ -10,6 +10,7 @@
     this.clock;
     this.bullets = [];
   };
+
   Game.DIM_X = 500;
   Game.DIM_Y = 500;
   Game.FPS = 1000 / 30;
@@ -66,7 +67,6 @@
     this.move();
     this.draw();
     this.checkCollisions();
-    this.removeAsteroids();
     this.checkWin();
   };
 
@@ -84,17 +84,6 @@
     return (movingObject.pos[0] > Game.DIM_X || movingObject.pos[0] < 0
     || movingObject.pos[1] > Game.DIM_Y || movingObject.pos[1] < 0)
   }
-
-  Game.prototype.removeAsteroids = function() {
-    var temp_asteroids = []
-    this.asteroids.forEach(function (asteroid) {
-      if(asteroid.pos[0] < Game.DIM_X && asteroid.pos[0] > 0
-      && asteroid.pos[1] < Game.DIM_Y && asteroid.pos[1] > 0) {
-        temp_asteroids.push(asteroid);}
-    });
-
-    this.asteroids = temp_asteroids;
-  };
 
   Game.prototype.bindKeyHandlers = function() {
     var game = this;

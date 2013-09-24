@@ -1,8 +1,8 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Ship = Asteroids.Ship = function(pos, vel, dim){
-    Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR, dim);
+  var Ship = Asteroids.Ship = function(pos, vel, game_dims){
+    Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR, game_dims);
   }
 
   Ship.RADIUS = 10;

@@ -11,7 +11,6 @@
   Bullet.COLOR = "black";
 
   Bullet.prototype.hitAsteroids = function (game) {
-
     var bullet = this;
 
     game.asteroids.forEach(function (asteroid) {

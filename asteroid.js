@@ -7,13 +7,13 @@ Function.prototype.inherits = function (SuperClass) {
 (function (root) {
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Asteroid = Asteroids.Asteroid = function (pos, vel, dim) {
-    Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS, Asteroid.COLOR, dim);
+  var Asteroid = Asteroids.Asteroid = function (pos, vel, game_dims) {
+    Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS, Asteroid.COLOR, game_dims);
   };
 
-  Asteroid.RADIUS = 5;
+  Asteroid.RADIUS = 10;
   Asteroid.COLOR = "LightCoral";
-  Asteroid.MAX_VELOCITY = 100;
+  Asteroid.MAX_VELOCITY = 5;
 
   Asteroid.inherits(Asteroids.MovingObject);
 
@@ -28,6 +28,5 @@ Function.prototype.inherits = function (SuperClass) {
        [dimX, dimY]
     );
   };
-
 
 })(this);
