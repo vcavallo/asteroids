@@ -54,13 +54,11 @@
   };
 
   Game.prototype.removeBullet = function(bullet) {
-    var bulletIndex = this.bullets.indexOf(bullet);
-    this.bullets.splice(bulletIndex, 1);
+    this.bullets.splice(this.bullets.indexOf(bullet), 1);
   };
 
   Game.prototype.removeAsteroid = function(asteroid) {
-    var asteroidIndex = this.asteroids.indexOf(asteroid);
-    this.asteroids.splice(asteroidIndex, 1);
+    this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
   };
 
   Game.prototype.step = function () {
