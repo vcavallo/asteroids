@@ -3,12 +3,12 @@
 
   var Game = Asteroids.Game = function(ctx) {
     this.ctx = ctx;
-    this.asteroids = [];
-    this.ship = new Asteroids.Ship([Game.DIM_X / 2, Game.DIM_Y / 2],
+	this.asteroids = [];
+    this.bullets = [];
+	this.clock;
+	this.ship = new Asteroids.Ship([Game.DIM_X / 2, Game.DIM_Y / 2],
                                    [0,0],
                                    [Game.DIM_X, Game.DIM_Y]);
-    this.clock;
-    this.bullets = [];
   };
 
   Game.DIM_X = 500;
@@ -21,8 +21,10 @@
     }
   };
 
-  Game.prototype.draw = function () {
+  Game.prototype.draw = function (background_img) {
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	
+	this.ctx.drawImage(background_img, 0, 0);
 
     this.asteroids.forEach(function(asteroid){
       asteroid.draw(this.ctx);
@@ -43,8 +45,9 @@
 
     game.bullets.forEach(function(bullet){
       bullet.move();
-      if (game.isOutOfBounds(bullet)) {
-        game.removeBullet(bullet);
+      
+	  if (game.isOutOfBounds(bullet)) {
+       	game.removeBullet(bullet);
       } else {
         bullet.hitAsteroids(game)
       }
@@ -61,9 +64,9 @@
     this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
   };
 
-  Game.prototype.step = function () {
+  Game.prototype.step = function (background_img) {
     this.move();
-    this.draw();
+    this.draw(background_img);
     this.checkCollisions();
     this.checkWin();
   };
@@ -85,11 +88,11 @@
 
   Game.prototype.bindKeyHandlers = function() {
     var game = this;
-
+	
+	key('up', function(){ game.ship.power([0,-1]) });
     key('down', function(){ game.ship.power([0,1]) });
-    key('up', function(){ game.ship.power([0,-1]) });
-    key('right', function(){ game.ship.power([1,0]) });
     key('left', function(){ game.ship.power([-1,0]) });
+    key('right', function(){ game.ship.power([1,0]) });
     key('space', function(){ game.ship.fireBullet(game.bullets) });
   }
 
@@ -106,12 +109,19 @@
 
   Game.prototype.start = function () {
     var game = this;
-    game.bindKeyHandlers();
+	var img = new Image();
+	img.src = "assets/background.png";
+    
+	game.bindKeyHandlers();
     game.addAsteroids(10);
 
-    this.clock = setInterval(function () {
-      game.step()
-    }, Game.FPS);
+	img.onload = function() {
+		var background_img = this;
+			
+		game.clock = setInterval(function () {
+			game.step(background_img);
+	    }, Game.FPS);
+	};  
   };
 
 })(this);

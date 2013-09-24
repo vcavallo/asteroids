@@ -1,7 +1,6 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
-  //for pos/vel
-  //[x,y]
+  
   var MovingObject = Asteroids.MovingObject = function(pos, vel, rad, color, game_dims){
     this.pos = pos;
     this.vel = vel;
@@ -15,8 +14,6 @@
     this.pos[0] += this.vel[0];
     this.pos[1] += this.vel[1];
   }
-
-
 
   MovingObject.prototype.wrapMove = function(){
     this.pos[0] = (this.pos[0] + this.vel[0]) % this.game_dims[0];
