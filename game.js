@@ -20,6 +20,10 @@
     for(var i=0; i<numAsteroids; i++){
       this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
     }
+
+	this.asteroids.forEach(function (asteroid) {
+		console.log(asteroid.pos);
+	})
   };
 
   Game.prototype.removeBullet = function(bullet) {

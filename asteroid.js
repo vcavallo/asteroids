@@ -13,17 +13,37 @@ Function.prototype.inherits = function (SuperClass) {
 
   Asteroid.RADIUS = 5;
   Asteroid.COLOR = "white";
-  Asteroid.MAX_VELOCITY = 8;
+  Asteroid.MAX_VELOCITY = 15;
 
   Asteroid.inherits(Asteroids.MovingObject);
 
+  Asteroid.placeAsteroid = function (dimX, dimY) {
+    var posX = dimX * Math.random(),
+    	posY = dimY * Math.random();
+
+	var xCenterDiff = dimX / 2 - posX,
+		yCenterDiff = dimY / 2 - posY;
+	
+	var xCorrection = dimX / 4,
+	    yCorrection = dimY / 4;
+
+	if(Math.abs(xCenterDiff) < xCorrection) {				
+		xCorrection = (xCenterDiff > 0) ? xCorrection * -1 : xCorrection;
+		posX += xCorrection;
+	} else if (Math.abs(yCenterDiff) < yCorrection) {
+		yCorrection = (yCenterDiff > 0) ? yCorrection * -1 : yCorrection;
+		posY += yCorrection ; 
+	}
+	
+	return [posX, posY];
+  }
+
   Asteroid.randomAsteroid = function (dimX, dimY) {
     return new Asteroid(
-      [dimX * Math.random(),
-       dimY * Math.random()],
-      [Asteroid.MAX_VELOCITY * Math.random(),
-       Asteroid.MAX_VELOCITY * Math.random()],
-       [dimX, dimY]
+      Asteroid.placeAsteroid(dimX, dimY),
+      [Asteroid.MAX_VELOCITY * Math.random() - (Asteroid.MAX_VELOCITY / 2),
+       Asteroid.MAX_VELOCITY * Math.random() - (Asteroid.MAX_VELOCITY / 2)],
+      [dimX, dimY]
     );
   };
 

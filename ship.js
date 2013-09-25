@@ -13,7 +13,6 @@
   Ship.prototype.power = function(impulse) {
     this.vel[0] += impulse[0];
     this.vel[1] += impulse[1];
-	console.log(this.vel);
   }
 
   Ship.prototype.fireBullet = function(bulletsArray) {
@@ -26,8 +25,9 @@
 
   Ship.prototype.direction = function() {
     var speed = Math.sqrt((Math.pow(this.vel[0], 2) + Math.pow(this.vel[1], 2)));
-
-    speed = speed / 10 //make the bullet 10X faster then the ship
+	
+	//Makes bullet 10X faster then the ship
+    speed /= 10 
     return [this.vel[0] / speed, this.vel[1] / speed];
   }
 
