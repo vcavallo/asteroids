@@ -1,4 +1,4 @@
-asteroids
+Asteroids
 =========
 
 Asteroids game with HTML5 Canvas and JS 1.6! 
