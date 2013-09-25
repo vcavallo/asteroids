@@ -11,8 +11,9 @@
                                    [Game.DIM_X, Game.DIM_Y]);
   };
 
-  Game.DIM_X = 500;
-  Game.DIM_Y = 500;
+  Game.DIM_X = 1000;
+  Game.DIM_Y = 600;
+  Game.NUM_ASTEROIDS = 20;
   Game.FPS = 1000 / 30;
 
   Game.prototype.addAsteroids = function (numAsteroids) {
@@ -20,6 +21,15 @@
       this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
     }
   };
+
+  Game.prototype.removeBullet = function(bullet) {
+    this.bullets.splice(this.bullets.indexOf(bullet), 1);
+  };
+
+  Game.prototype.removeAsteroid = function(asteroid) {
+    this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
+  };
+
 
   Game.prototype.draw = function (background_img) {
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
@@ -30,7 +40,7 @@
       asteroid.draw(this.ctx);
     });
     this.bullets.forEach(function(bullet){
-      bullet.draw(this.ctx);
+      bullet.draw(this.ctx, true);
     });
 
     this.ship.draw(this.ctx);
@@ -56,29 +66,11 @@
     game.ship.wrapMove();
   };
 
-  Game.prototype.removeBullet = function(bullet) {
-    this.bullets.splice(this.bullets.indexOf(bullet), 1);
-  };
-
-  Game.prototype.removeAsteroid = function(asteroid) {
-    this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
-  };
-
   Game.prototype.step = function (background_img) {
-    this.move();
     this.draw(background_img);
-    this.checkCollisions();
+	this.move();
+    this.checkLose();
     this.checkWin();
-  };
-
-  Game.prototype.checkCollisions = function () {
-    var game = this;
-    this.asteroids.forEach( function(asteroid){
-      if(asteroid.isCollidedWith(game.ship)) {
-        alert("Game Over");
-        game.stop();
-      };
-    });
   };
 
   Game.prototype.isOutOfBounds = function (movingObject) {
@@ -96,9 +88,19 @@
     key('space', function(){ game.ship.fireBullet(game.bullets) });
   }
 
+  Game.prototype.checkLose = function () {
+    var game = this;
+    this.asteroids.forEach( function(asteroid){
+      if(asteroid.isCollidedWith(game.ship)) {
+        alert("Game Over!");
+        game.stop();
+      };
+    });
+  };
+
   Game.prototype.checkWin = function () {
     if( this.asteroids.length === 0) {
-      alert("Game Won");
+      alert("Congrats, you won!");
       this.stop();
     }
   }
@@ -113,7 +115,7 @@
 	img.src = "assets/background.png";
     
 	game.bindKeyHandlers();
-    game.addAsteroids(10);
+    game.addAsteroids(Game.NUM_ASTEROIDS);
 
 	img.onload = function() {
 		var background_img = this;

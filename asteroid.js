@@ -11,13 +11,11 @@ Function.prototype.inherits = function (SuperClass) {
     Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS, Asteroid.COLOR, game_dims);
   };
 
-  Asteroid.RADIUS = 10;
-  Asteroid.COLOR = "LightCoral";
-  Asteroid.MAX_VELOCITY = 5;
+  Asteroid.RADIUS = 5;
+  Asteroid.COLOR = "white";
+  Asteroid.MAX_VELOCITY = 8;
 
   Asteroid.inherits(Asteroids.MovingObject);
-
-  Asteroid.prototype.test = function () { }
 
   Asteroid.randomAsteroid = function (dimX, dimY) {
     return new Asteroid(

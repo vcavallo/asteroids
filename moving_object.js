@@ -22,9 +22,12 @@
     if(this.pos[0] < 0) { this.pos[0] = this.game_dims[0]; }
     if(this.pos[1] < 0) { this.pos[1] = this.game_dims[1]; }
   }
+	
+  //Allow for optional fill parameter
+  MovingObject.prototype.draw = function(ctx, fill) {
+    
+	(typeof fill === "undefined") ? ctx.strokeStyle = this.color : ctx.fillStyle = this.color;
 
-  MovingObject.prototype.draw = function(ctx) {
-    ctx.fillStyle = this.color;
     ctx.beginPath();
 
     ctx.arc(
@@ -36,7 +39,7 @@
       false
     );
 
-    ctx.fill();
+    (typeof fill === "undefined") ? ctx.stroke() : ctx.fill();
   }
 
   MovingObject.prototype.isCollidedWith = function(otherObject) {
