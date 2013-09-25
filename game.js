@@ -7,7 +7,7 @@
     this.bullets = [];
 	this.clock;
 	this.ship = new Asteroids.Ship([Game.DIM_X / 2, Game.DIM_Y / 2],
-                                   [0,0],
+                                   [0,-1],
                                    [Game.DIM_X, Game.DIM_Y]);
   };
 
