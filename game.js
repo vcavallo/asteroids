@@ -45,7 +45,7 @@
       bullet.draw(this.ctx, true);
     });
 
-    this.ship.draw(this.ctx);
+    this.ship.draw(this.ctx, imgs["ss"]);
   };
 
   Game.prototype.move = function () {
@@ -118,9 +118,6 @@
 	var background_img = new Image(),
 		spaceship_img  = new Image();
 		
-	background_img.src = Game.BACKGROUND_IMG;
-	spaceship_img.src = Game.SPACESHIP_IMG;
-    
 	game.bindKeyHandlers();
     game.addAsteroids(Game.NUM_ASTEROIDS);
 
@@ -128,7 +125,11 @@
 		var imgs = {bg: background_img, ss: spaceship_img};
 			
 		game.clock = setInterval(game.step.bind(game, imgs), Game.FPS);
-	};  
+	};
+	
+	//apparently these should be set after .onload
+	background_img.src = Game.BACKGROUND_IMG;
+	spaceship_img.src = Game.SPACESHIP_IMG;  
   };
 
 })(this);

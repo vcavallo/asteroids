@@ -5,7 +5,7 @@
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR, game_dims);
   }
 
-  Ship.RADIUS = 10;
+  Ship.RADIUS = 24;
   Ship.COLOR = "white";
 
   Ship.inherits(Asteroids.MovingObject);
@@ -29,6 +29,27 @@
 	//Makes bullet 10X faster then the ship
     speed /= 10 
     return [this.vel[0] / speed, this.vel[1] / speed];
+  }
+
+  Ship.prototype.angle = function () {
+	//y must be flipped to get to Cartesian system
+    var degrees = Math.atan2(this.vel[0],-this.vel[1]);
+	
+	return Math.round(degrees * 180/Math.PI)
+  }
+
+  Ship.prototype.draw = function(ctx, img) {    	 
+	function drawRotatedImage(image, x, y, angle) { 
+		var TO_RADIANS = Math.PI/180;
+		ctx.save(); 
+		ctx.translate(x, y);
+		ctx.rotate(angle * TO_RADIANS);
+		
+		ctx.drawImage(image, -(image.width/2), -(image.height/2));
+		ctx.restore(); 
+	}
+		
+	drawRotatedImage(img, this.pos[0], this.pos[1], this.angle());
   }
 
 })(this);
