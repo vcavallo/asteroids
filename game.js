@@ -20,10 +20,6 @@
     for(var i=0; i<numAsteroids; i++){
       this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
     }
-
-	this.asteroids.forEach(function (asteroid) {
-		console.log(asteroid.pos);
-	})
   };
 
   Game.prototype.removeBullet = function(bullet) {
@@ -70,13 +66,6 @@
     game.ship.wrapMove();
   };
 
-  Game.prototype.step = function (background_img) {
-    this.draw(background_img);
-	this.move();
-    this.checkLose();
-    this.checkWin();
-  };
-
   Game.prototype.isOutOfBounds = function (movingObject) {
     return (movingObject.pos[0] > Game.DIM_X || movingObject.pos[0] < 0
     || movingObject.pos[1] > Game.DIM_Y || movingObject.pos[1] < 0)
@@ -113,6 +102,13 @@
     clearInterval(this.clock);
   };
 
+  Game.prototype.step = function (background_img) {
+    this.draw(background_img);
+	this.move();
+    this.checkLose();
+    this.checkWin();
+  };
+
   Game.prototype.start = function () {
     var game = this;
 	var img = new Image();
@@ -124,9 +120,7 @@
 	img.onload = function() {
 		var background_img = this;
 			
-		game.clock = setInterval(function () {
-			game.step(background_img);
-	    }, Game.FPS);
+		game.clock = setInterval(game.step.bind(game, background_img), Game.FPS);
 	};  
   };
 
