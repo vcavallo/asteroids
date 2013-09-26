@@ -15,6 +15,9 @@
   Game.DIM_Y = 600;
   Game.NUM_ASTEROIDS = 20;
   Game.FPS = 1000 / 30;
+  
+  Game.BACKGROUND_IMG = "assets/background.png";
+  Game.SPACESHIP_IMG = "assets/spaceship_dummy.png";
 
   Game.prototype.addAsteroids = function (numAsteroids) {
     for(var i=0; i<numAsteroids; i++){
@@ -30,11 +33,10 @@
     this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
   };
 
-
-  Game.prototype.draw = function (background_img) {
+  Game.prototype.draw = function (imgs) {
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 	
-	this.ctx.drawImage(background_img, 0, 0);
+	this.ctx.drawImage(imgs["bg"], 0, 0);
 
     this.asteroids.forEach(function(asteroid){
       asteroid.draw(this.ctx);
@@ -67,8 +69,10 @@
   };
 
   Game.prototype.isOutOfBounds = function (movingObject) {
-    return (movingObject.pos[0] > Game.DIM_X || movingObject.pos[0] < 0
-    || movingObject.pos[1] > Game.DIM_Y || movingObject.pos[1] < 0)
+    return (movingObject.pos[0] > Game.DIM_X || 
+			movingObject.pos[0] < 0 || 
+			movingObject.pos[1] > Game.DIM_Y || 
+			movingObject.pos[1] < 0)
   }
 
   Game.prototype.bindKeyHandlers = function() {
@@ -102,8 +106,8 @@
     clearInterval(this.clock);
   };
 
-  Game.prototype.step = function (background_img) {
-    this.draw(background_img);
+  Game.prototype.step = function (imgs) {
+    this.draw(imgs);
 	this.move();
     this.checkLose();
     this.checkWin();
@@ -111,16 +115,19 @@
 
   Game.prototype.start = function () {
     var game = this;
-	var img = new Image();
-	img.src = "assets/background.png";
+	var background_img = new Image(),
+		spaceship_img  = new Image();
+		
+	background_img.src = Game.BACKGROUND_IMG;
+	spaceship_img.src = Game.SPACESHIP_IMG;
     
 	game.bindKeyHandlers();
     game.addAsteroids(Game.NUM_ASTEROIDS);
 
-	img.onload = function() {
-		var background_img = this;
+	background_img.onload = function() {
+		var imgs = {bg: background_img, ss: spaceship_img};
 			
-		game.clock = setInterval(game.step.bind(game, background_img), Game.FPS);
+		game.clock = setInterval(game.step.bind(game, imgs), Game.FPS);
 	};  
   };
 
