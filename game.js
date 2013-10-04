@@ -17,7 +17,7 @@
   Game.FPS = 1000 / 30;
   
   Game.BACKGROUND_IMG = "assets/background.png";
-  Game.SPACESHIP_IMG = "assets/spaceship_dummy.png";
+  Game.SPACESHIP_IMG = "assets/spaceship.png";
 
   Game.prototype.addAsteroids = function (numAsteroids) {
     for(var i=0; i<numAsteroids; i++){

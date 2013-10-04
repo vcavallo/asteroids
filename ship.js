@@ -5,7 +5,7 @@
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR, game_dims);
   }
 
-  Ship.RADIUS = 24;
+  Ship.RADIUS = 20;
   Ship.COLOR = "white";
 
   Ship.inherits(Asteroids.MovingObject);
